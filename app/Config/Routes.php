@@ -25,3 +25,22 @@ $routes->post(
     '/patient/save-appointment',
     'PatientController::saveAppointment'
 );
+
+$routes->get(
+    '/patient/appointments',
+    'PatientController::appointments'
+);
+$routes->get(
+    '/doctor/appointments',
+    'DoctorController::appointments'
+);
+
+$routes->get(
+    '/doctor/approve/(:num)',
+    'DoctorController::approveAppointment/$1'
+);
+
+$routes->get(
+    '/doctor/reject/(:num)',
+    'DoctorController::rejectAppointment/$1'
+);

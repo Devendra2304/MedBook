@@ -91,4 +91,24 @@ class PatientController extends BaseController
         return redirect()->back()
             ->with('success', 'Appointment booked successfully.');
     }
+    public function appointments()
+    {
+        if (!session()->get('logged_in') || session()->get('role') != 'patient')
+        {
+            return redirect()->to('/login');
+        }
+
+        $appointmentModel = new AppointmentModel();
+
+        $appointments = $appointmentModel
+            ->select('appointments.*, users.name as doctor_name')
+            ->join('doctors', 'doctors.id = appointments.doctor_id')
+            ->join('users', 'users.id = doctors.user_id')
+            ->where('appointments.patient_id', session()->get('user_id'))
+            ->findAll();
+
+        return view('patient/appointments', [
+            'appointments' => $appointments
+        ]);
+    }
 }

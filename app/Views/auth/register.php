@@ -475,8 +475,10 @@
                         </label>
 
                         <select
+                            id="role"
                             name="role"
                             class="form-select"
+                            onchange="toggleDoctorFields()"
                             required>
 
                             <option value="">
@@ -492,6 +494,50 @@
                             </option>
 
                         </select>
+                        <div id="doctorFields" style="display:none;">
+
+                        <div class="mb-3">
+
+                        <label class="form-label">
+                            Specialization
+                        </label>
+
+                        <input
+                            type="text"
+                            name="specialization"
+                            class="form-control"
+                            placeholder="e.g. Cardiologist">
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Experience (Years)
+                            </label>
+
+                            <input
+                                type="number"
+                                name="experience"
+                                class="form-control"
+                                placeholder="e.g. 10">
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Phone Number
+                            </label>
+
+                            <input
+                                type="text"
+                                name="phone"
+                                class="form-control"
+                                placeholder="Enter phone number">
+
+                        </div>
+
+</div>
 
                     </div>
 
@@ -565,6 +611,20 @@ function checkStrength(){
         bar.style.width = "100%";
         bar.style.background = "#22c55e";
         text.innerHTML = "Strong Password";
+    }
+}
+function toggleDoctorFields()
+{
+    let role = document.getElementById('role').value;
+    let doctorFields = document.getElementById('doctorFields');
+
+    if(role === 'doctor')
+    {
+        doctorFields.style.display = 'block';
+    }
+    else
+    {
+        doctorFields.style.display = 'none';
     }
 }
 
