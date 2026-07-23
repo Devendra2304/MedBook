@@ -59,3 +59,5 @@ $routes->get(
     '/patient/records',
     'PatientController::records'
 );
+
+$routes->get('/test-email', 'PatientController::testEmail');

@@ -88,7 +88,33 @@ class PatientController extends BaseController
             'symptoms' => $this->request->getPost('symptoms'),
             'status' => 'Pending'
         ]);
+         
+        $userModel = new UserModel();
+        $patient = $userModel->find(session()->get('user_id'));
 
+        $doctorModel = new DoctorModel();
+
+        $doctor = $doctorModel
+            ->select('doctors.*, users.name')
+            ->join('users', 'users.id = doctors.user_id')
+            ->where('doctors.id', $doctorId)
+            ->first();
+        
+        $email = \Config\Services::email();
+        $email->setTo($patient['email']);
+        $email->setSubject('MedBook - Appointment Booking Confirmation');
+
+        $email->setMessage("
+            <h2>Appointment Booking Confirmation</h2>
+            <p>Dear <strong>{$patient['name']}</strong>,</p>
+            <p>Your appointment with Dr. {$doctor['name']} has been booked successfully.</p>
+            <p><strong>Date:</strong> {$date}</p>
+            <p><strong>Time:</strong> {$time}</p>
+            <p><strong>Symptoms:</strong> {$this->request->getPost('symptoms')}</p>
+            <p>Thank you for using MedBook!</p>");
+            
+
+        $email->send();            
         return redirect()->back()
             ->with('success', 'Appointment booked successfully.');
     }
