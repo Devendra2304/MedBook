@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Models\DoctorModel;
 use App\Models\UserModel;
 use App\Models\AppointmentModel;
+use App\Models\PatientRecordModel;
 
 class PatientController extends BaseController
 {
@@ -109,6 +110,27 @@ class PatientController extends BaseController
 
         return view('patient/appointments', [
             'appointments' => $appointments
+        ]);
+    }
+
+    public function records()
+    {
+        if (!session()->get('logged_in') || session()->get('role') != 'patient')
+        {
+            return redirect()->to('/login');
+        }
+
+        $recordModel = new PatientRecordModel();
+
+        $records = $recordModel
+            ->select('patient_records.*, users.name as doctor_name')
+            ->join('doctors', 'doctors.id = patient_records.doctor_id')
+            ->join('users', 'users.id = doctors.user_id')
+            ->where('patient_records.patient_id', session()->get('user_id'))
+            ->findAll();
+
+        return view('patient/records', [
+            'records' => $records
         ]);
     }
 }

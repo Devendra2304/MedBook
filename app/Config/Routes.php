@@ -44,3 +44,18 @@ $routes->get(
     '/doctor/reject/(:num)',
     'DoctorController::rejectAppointment/$1'
 );
+
+$routes->get(
+    '/doctor/record/(:num)',
+    'DoctorController::recordForm/$1'
+);
+
+$routes->post(
+    '/doctor/save-record',
+    'DoctorController::saveRecord'
+);
+
+$routes->get(
+    '/patient/records',
+    'PatientController::records'
+);

@@ -11,6 +11,25 @@
 <div class="container mt-5">
 
     <h2>Manage Appointments</h2>
+    <?php if(session()->getFlashdata('success')): ?>
+
+    <div class="alert alert-success">
+
+        <?= session()->getFlashdata('success') ?>
+
+    </div>
+
+    <?php endif; ?>
+
+    <?php if(session()->getFlashdata('error')): ?>
+
+        <div class="alert alert-danger">
+
+            <?= session()->getFlashdata('error') ?>
+
+        </div>
+
+    <?php endif; ?>
 
     <div class="row">
 
@@ -74,6 +93,15 @@
 
                                 </a>
 
+                            <?php endif; ?>
+
+                            <?php if($appointment['status'] == 'Approved'): ?>
+                                <a
+                                    href="/doctor/record/<?= $appointment['id'] ?>"
+                                    class="btn btn-primary">
+
+                                    Add Record
+                                </a>
                             <?php endif; ?>
 
                         </div>

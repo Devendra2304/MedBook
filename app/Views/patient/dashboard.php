@@ -204,7 +204,7 @@ Patient
 
 <div class="col-lg-4">
 
-<div class="action-card">
+<div class="action-card mb-4">
 
 <div class="action-icon">
 <i class="bi bi-hospital"></i>
@@ -254,7 +254,34 @@ View Appointments
 
 </div>
 
-<div class="health-card">
+<div class="col-lg-4">
+
+    <div class="action-card">
+
+        <div class="action-icon">
+            <i class="bi bi-file-earmark-medical-fill"></i>
+        </div>
+
+        <h4>Health Records</h4>
+
+        <p>
+            View your medical history, prescriptions, diagnoses, and health records.
+        </p>
+
+        <a href="/patient/records"
+           class="btn btn-dashboard">
+
+            <i class="bi bi-file-medical-fill me-2"></i>
+            View Records
+
+        </a>
+
+    </div>
+
+</div>
+
+<div class="health-card mt-4">
+
 
 <h4 class="mb-3">
 <i class="bi bi-heart-pulse-fill"></i>
