@@ -82,6 +82,7 @@ class AuthController extends BaseController
                 'doctor_id' => $doctorId,
                 'name'    => $user['name'],
                 'role'    => $user['role'],
+                'email'   => $user['email'],
                 'logged_in' => true
             ]);
 

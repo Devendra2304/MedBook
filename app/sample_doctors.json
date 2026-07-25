@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Dr. Rohot",
+    "email": "rohot@example.com",
+    "specialization": "Cardiologist",
+    "experience": 10,
+    "phone": "9876543210"
+  },
+  {
+    "name": "Dr. Priya Sharma",
+    "email": "priya@example.com",
+    "specialization": "Dermatologist",
+    "experience": 7,
+    "phone": "9876543211"
+  },
+  {
+    "name": "Dr. Amit Patil",
+    "email": "amit@example.com",
+    "specialization": "Orthopedic",
+    "experience": 12,
+    "phone": "9876543212"
+  }
+]

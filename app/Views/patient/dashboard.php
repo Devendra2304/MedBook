@@ -193,11 +193,6 @@ Patient
 
 <hr>
 
-<p>
-<strong>Email:</strong><br>
-<?= session()->get('email') ?>
-</p>
-
 </div>
 
 </div>
