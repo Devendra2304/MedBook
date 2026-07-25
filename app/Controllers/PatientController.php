@@ -5,6 +5,7 @@ use App\Models\DoctorModel;
 use App\Models\UserModel;
 use App\Models\AppointmentModel;
 use App\Models\PatientRecordModel;
+use App\Models\HealthTipModel;
 
 class PatientController extends BaseController
 {
@@ -26,7 +27,7 @@ class PatientController extends BaseController
         $doctorModel = new DoctorModel();
 
         $doctors = $doctorModel
-            ->select('doctors.*, users.name')
+            ->select('doctors.*,users.id AS user_id, users.name')
             ->join('users', 'users.id = doctors.user_id')
             ->findAll();
 
@@ -45,9 +46,9 @@ class PatientController extends BaseController
         $doctorModel = new DoctorModel();
 
         $doctor = $doctorModel
-            ->select('doctors.*, users.name')
+            ->select('doctors.*,users.id AS user_id,users.name')
             ->join('users', 'users.id = doctors.user_id')
-            ->where('doctors.id', $doctorId)
+            ->where('doctors.user_id', $doctorId)
             ->first();
 
         return view('patient/book_appointment', [
@@ -95,9 +96,9 @@ class PatientController extends BaseController
         $doctorModel = new DoctorModel();
 
         $doctor = $doctorModel
-            ->select('doctors.*, users.name')
+            ->select('doctors.*, users.id AS user_id,users.name,users.email')
             ->join('users', 'users.id = doctors.user_id')
-            ->where('doctors.id', $doctorId)
+            ->where('doctors.user_id', $doctorId)
             ->first();
         
         $email = \Config\Services::email();
@@ -129,8 +130,8 @@ class PatientController extends BaseController
 
         $appointments = $appointmentModel
             ->select('appointments.*, users.name as doctor_name')
-            ->join('doctors', 'doctors.id = appointments.doctor_id')
-            ->join('users', 'users.id = doctors.user_id')
+            ->join('doctors', 'doctors.user_id = appointments.doctor_id')
+            ->join('users', 'users.id = appointments.doctor_id')
             ->where('appointments.patient_id', session()->get('user_id'))
             ->findAll();
 
@@ -157,6 +158,23 @@ class PatientController extends BaseController
 
         return view('patient/records', [
             'records' => $records
+        ]);
+    }
+    public function healthTips()
+    {
+        if (!session()->get('logged_in') || session()->get('role') != 'patient')
+        {
+            return redirect()->to('/login');
+        }
+
+        $healthModel = new HealthTipModel();
+
+        $tips = $healthModel
+            ->orderBy('id', 'ASC')
+            ->findAll();
+
+        return view('patient/health_tips', [
+            'tips' => $tips
         ]);
     }
 }

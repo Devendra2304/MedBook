@@ -350,9 +350,7 @@
                 modern healthcare platform built for seamless medical care.
             </p>
 
-            <div class="hero-icon">
-                <i class="bi bi-person-plus-fill"></i>
-            </div>
+
 
             <div class="row mt-4">
 

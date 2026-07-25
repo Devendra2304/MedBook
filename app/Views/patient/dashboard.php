@@ -253,31 +253,57 @@ View Appointments
 </div>
 
 </div>
+<div class="row g-4">
 
 <div class="col-lg-4">
 
-    <div class="action-card">
+<div class="action-card">
 
-        <div class="action-icon">
-            <i class="bi bi-file-earmark-medical-fill"></i>
-        </div>
+<div class="action-icon">
+<i class="bi bi-file-earmark-medical-fill"></i>
+</div>
 
-        <h4>Health Records</h4>
+<h4>Health Records</h4>
 
-        <p>
-            View your medical history, prescriptions, diagnoses, and health records.
-        </p>
+<p>
+View your medical history, prescriptions, diagnoses, and health records.
+</p>
 
-        <a href="/patient/records"
-           class="btn btn-dashboard">
+<a href="/patient/records"
+class="btn btn-dashboard">
 
-            <i class="bi bi-file-medical-fill me-2"></i>
-            View Records
+<i class="bi bi-file-medical-fill me-2"></i>
+View Records
 
-        </a>
+</a>
 
-    </div>
+</div>
 
+</div>
+<div class="col-lg-4">
+
+<div class="action-card">
+
+<div class="action-icon">
+<i class="bi bi-camera-video-fill"></i>
+</div>
+
+<h4>Health Tips Videos</h4>
+
+<p>
+Watch healthcare videos and wellness tips from medical professionals.
+</p>
+
+<a href="/patient/health-tips"
+class="btn btn-dashboard">
+
+Watch Videos
+
+</a>
+
+</div>
+
+</div>
 </div>
 
 <div class="health-card mt-4">
@@ -296,6 +322,7 @@ and schedule routine health checkups.
 </div>
 
 </div>
+
 
 </body>
 </html>

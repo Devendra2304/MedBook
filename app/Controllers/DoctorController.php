@@ -12,9 +12,42 @@ class DoctorController extends BaseController
         {
             return redirect()->to('/login');
         }
-        return view('doctor/dashboard');
-    }
 
+        $appointmentModel = new AppointmentModel();
+
+        $doctorId = session()->get('user_id');
+
+        // Total unique patients
+        $totalPatients = $appointmentModel
+            ->select('patient_id')
+            ->where('doctor_id', $doctorId)
+            ->groupBy('patient_id')
+            ->countAllResults();
+
+        // Total appointments
+        $totalAppointments = $appointmentModel
+            ->where('doctor_id', $doctorId)
+            ->countAllResults();
+
+        // Pending appointments
+        $pendingAppointments = $appointmentModel
+            ->where('doctor_id', $doctorId)
+            ->where('status', 'Pending')
+            ->countAllResults();
+
+        // Approved appointments
+        $approvedAppointments = $appointmentModel
+            ->where('doctor_id', $doctorId)
+            ->where('status', 'Approved')
+            ->countAllResults();
+
+        return view('doctor/dashboard', [
+            'totalPatients'       => $totalPatients,
+            'totalAppointments'   => $totalAppointments,
+            'pendingAppointments' => $pendingAppointments,
+            'approvedAppointments'=> $approvedAppointments
+        ]);
+    }
 
     public function appointments()
     {
@@ -30,7 +63,7 @@ class DoctorController extends BaseController
             ->join('users', 'users.id = appointments.patient_id')
             ->where(
                 'appointments.doctor_id',
-                 session()->get('doctor_id')
+                 session()->get('user_id')
             )
             ->findAll();
 
@@ -95,7 +128,7 @@ class DoctorController extends BaseController
         ->select('appointments.*, users.name as patient_name')
         ->join('users', 'users.id = appointments.patient_id')
         ->where('appointments.id', $appointmentId)
-        ->where('appointments.doctor_id', session()->get('doctor_id'))
+        ->where('appointments.doctor_id', session()->get('user_id'))
         ->first();
 
     if (!$appointment)

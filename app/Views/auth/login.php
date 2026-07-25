@@ -367,9 +367,7 @@
                 from anywhere.
             </p>
 
-            <div class="hero-icon">
-                <i class="bi bi-hospital"></i>
-            </div>
+
 
             <div class="row mt-4">
 

@@ -344,7 +344,7 @@ Dr. <?= esc($doctor['name']) ?>
 <div class="mt-4">
 
 <a
-href="/patient/book/<?= $doctor['id'] ?>"
+href="/patient/book/<?= $doctor['user_id'] ?>"
 class="btn btn-book w-100">
 
 <i class="bi bi-calendar-check-fill me-2"></i>

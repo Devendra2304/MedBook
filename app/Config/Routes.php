@@ -60,4 +60,4 @@ $routes->get(
     'PatientController::records'
 );
 
-$routes->get('/test-email', 'PatientController::testEmail');
+$routes->get('/patient/health-tips', 'PatientController::healthTips');

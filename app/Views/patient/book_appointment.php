@@ -256,7 +256,7 @@ method="post">
 <input
 type="hidden"
 name="doctor_id"
-value="<?= $doctor['id'] ?>">
+value="<?= $doctor['user_id'] ?>">
 
 <div class="row">
 
