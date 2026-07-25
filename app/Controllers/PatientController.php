@@ -26,15 +26,25 @@ class PatientController extends BaseController
 
         $doctorModel = new DoctorModel();
 
-        $doctors = $doctorModel
-            ->select('doctors.*,users.id AS user_id, users.name')
-            ->join('users', 'users.id = doctors.user_id')
-            ->findAll();
+        $search = $this->request->getGet('search');
+
+        $doctorModel
+            ->select('doctors.*, users.name')
+            ->join('users', 'users.id = doctors.user_id');
+
+        if (!empty($search))
+        {
+            $doctorModel->like('users.name', $search);
+        }
+
+        $doctors = $doctorModel->findAll();
 
         return view('patient/doctors', [
-            'doctors' => $doctors
+            'doctors' => $doctors,
+            'search' => $search
         ]);
     }
+
 
     public function bookAppointment($doctorId)
     {

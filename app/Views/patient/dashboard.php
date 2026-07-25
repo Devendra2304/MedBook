@@ -192,7 +192,10 @@ Patient
 </p>
 
 <hr>
-
+<p class="text-light text-center mb-0">
+    <i class="bi bi-envelope-fill me-2"></i>
+    <?= esc(session()->get('email')) ?>
+</p>
 </div>
 
 </div>
@@ -317,7 +320,6 @@ and schedule routine health checkups.
 </div>
 
 </div>
-
 
 </body>
 </html>

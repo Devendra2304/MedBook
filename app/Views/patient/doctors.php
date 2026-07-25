@@ -282,6 +282,7 @@ Browse our verified healthcare professionals and book appointments instantly.
 
 <input
 type="text"
+id="searchDoctor"
 class="form-control search-box"
 placeholder="Search doctors by name or specialization">
 
@@ -293,7 +294,7 @@ placeholder="Search doctors by name or specialization">
 
 <?php foreach($doctors as $doctor): ?>
 
-<div class="col-lg-4 col-md-6">
+<div class="col-lg-4 col-md-6 doctor-item">
 
 <div class="card doctor-card h-100">
 
@@ -305,7 +306,7 @@ placeholder="Search doctors by name or specialization">
 
 </div>
 
-<h4 class="text-center">
+<h4 class="text-center doctor-name">
 
 Dr. <?= esc($doctor['name']) ?>
 
@@ -370,6 +371,33 @@ Book Appointment
 <!-- Bootstrap JS -->
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const searchInput = document.getElementById("searchDoctor");
+
+    searchInput.addEventListener("keyup", function () {
+
+        const search = this.value.toLowerCase().trim();
+
+        document.querySelectorAll(".doctor-item").forEach(function(card) {
+
+            const name = card.querySelector(".doctor-name").textContent.toLowerCase();
+            const specialization = card.querySelector(".specialization").textContent.toLowerCase();
+
+            if (name.includes(search) || specialization.includes(search)) {
+                card.style.display = "";
+            } else {
+                card.style.display = "none";
+            }
+
+        });
+
+    });
+
+});
+
+</script>
 
 </body>
 </html>

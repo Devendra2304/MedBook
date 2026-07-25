@@ -625,7 +625,7 @@ Logout
 
 ## Audio/Video Section
 
-! [Audio Video](screenshots/audio-video.png)
+![Health Tips](screenshots/health-tips.png)
 
 ---
 
