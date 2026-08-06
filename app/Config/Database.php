@@ -24,32 +24,28 @@ class Database extends Config
      *
      * @var array<string, mixed>
      */
-    public array $default = [
-        'DSN'          => '',
-        'hostname'     => 'localhost',
-        'username'     => '',
-        'password'     => '',
-        'database'     => '',
-        'DBDriver'     => 'MySQLi',
-        'DBPrefix'     => '',
-        'pConnect'     => false,
-        'DBDebug'      => true,
-        'charset'      => 'utf8mb4',
-        'DBCollat'     => 'utf8mb4_general_ci',
-        'swapPre'      => '',
-        'encrypt'      => false,
-        'compress'     => false,
-        'strictOn'     => false,
-        'failover'     => [],
-        'port'         => 3306,
-        'numberNative' => false,
-        'foundRows'    => false,
-        'dateFormat'   => [
-            'date'     => 'Y-m-d',
-            'datetime' => 'Y-m-d H:i:s',
-            'time'     => 'H:i:s',
-        ],
-    ];
+public array $default = [
+    'DSN'      => "host=ep-damp-haze-azdyjx9p-pooler.c-3.ap-southeast-1.aws.neon.tech port=5432 dbname=medbook user=neondb_owner password=npg_siNadL8Jp9PM sslmode=require options='endpoint=ep-damp-haze-azdyjx9p'",
+    'hostname' => '',
+    'username' => '',
+    'password' => '',
+    'database' => '',
+    'DBDriver' => 'Postgre',
+    'DBPrefix' => '',
+    'pConnect' => false,
+    'DBDebug'  => true,
+    'charset'  => 'utf8',
+    'DBCollat' => '',
+    'schema'   => 'public',
+    'port'     => 5432,
+    'failover' => [],
+    'dateFormat' => [
+        'date'     => 'Y-m-d',
+        'datetime' => 'Y-m-d H:i:s',
+        'time'     => 'H:i:s',
+    ],
+];
+
 
     //    /**
     //     * Sample database connection for SQLite3.

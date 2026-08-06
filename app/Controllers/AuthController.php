@@ -19,7 +19,14 @@ class AuthController extends BaseController
 
     public function registerUser()
     {
+        
         $userModel = new UserModel();
+
+        $email = $this->request->getPost('email');
+
+        if ($userModel->where('email', $email)->first()) {
+            return redirect()->back()->with('error', 'Email already registered.');
+        }
 
         $userId = $userModel->insert([
             'name'     => $this->request->getPost('name'),
