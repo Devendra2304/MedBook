@@ -20,7 +20,7 @@ WORKDIR /var/www/html
 COPY . .
 
 # Install dependencies
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+RUN composer install -vvv
 
 # Apache document root
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
