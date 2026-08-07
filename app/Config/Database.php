@@ -25,7 +25,7 @@ class Database extends Config
      * @var array<string, mixed>
      */
 public array $default = [
-    'DSN'      => "host=ep-damp-haze-azdyjx9p-pooler.c-3.ap-southeast-1.aws.neon.tech port=5432 dbname=medbook user=neondb_owner password=npg_siNadL8Jp9PM sslmode=require options='endpoint=ep-damp-haze-azdyjx9p'",
+    'DSN' => "host=ep-damp-haze-azdyjx9p-pooler.c-3.ap-southeast-1.aws.neon.tech port=5432 dbname=medbook user=neondb_owner password=YOUR_PASSWORD sslmode=require options='endpoint=ep-damp-haze-azdyjx9p-pooler'",
     'hostname' => '',
     'username' => '',
     'password' => '',
