@@ -1,6 +1,6 @@
 FROM php:8.2-apache
 
-# Install dependencies
+# Install required packages
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     unzip \
@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y \
     zip \
     && docker-php-ext-install pdo pdo_pgsql pgsql
 
-# Enable rewrite
+# Enable Apache rewrite
 RUN a2enmod rewrite
 
 # Install Composer
@@ -20,7 +20,7 @@ WORKDIR /var/www/html
 COPY . .
 
 # Install dependencies
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 # Apache document root
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
