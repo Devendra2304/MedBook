@@ -8,7 +8,7 @@ use App\Models\DoctorModel;
 class AuthController extends BaseController
 {
     public function login()
-    {
+    {      
         return view('auth/login');
     }
 
@@ -53,30 +53,33 @@ class AuthController extends BaseController
         return redirect()->to('/login');
     }
 
-    public function loginUser()
+ public function loginUser()
+{
+    $db = \Config\Database::connect();
+
+    $email = $this->request->getPost('email');
+    $password = $this->request->getPost('password');
+    $role = $this->request->getPost('role');
+
+    $query = $db->query(
+        "SELECT * FROM users WHERE email = ? AND role = ? LIMIT 1",
+        [$email, $role]
+    );
+
+    $user = $query->getRowArray();
+
+    if ($user && password_verify($password, $user['password']))
     {
-        $userModel = new UserModel();
+        $doctorId = null;
 
-        $email = $this->request->getPost('email');
-        $password = $this->request->getPost('password');
-        $role = $this->request->getPost('role');
-
-        $user = $userModel
-            ->where('email', $email)
-            ->where('role', $role)
-            ->first();
-
-        if ($user && password_verify($password, $user['password']))
+        if ($user['role'] === 'doctor')
         {
-            $doctorId = null;
+            $doctorQuery = $db->query(
+                "SELECT id FROM doctors WHERE user_id = ? LIMIT 1",
+                [$user['id']]
+            );
 
-            if ($user['role'] == 'doctor')
-            {
-                $doctorModel = new DoctorModel();
-
-                $doctor = $doctorModel
-                    ->where('user_id', $user['id'])
-                    ->first();
+            $doctor = $doctorQuery->getRowArray();
 
             if ($doctor)
             {
@@ -84,28 +87,28 @@ class AuthController extends BaseController
             }
         }
 
-            session()->set([
-                'user_id' => $user['id'],
-                'doctor_id' => $doctorId,
-                'name'    => $user['name'],
-                'role'    => $user['role'],
-                'email'   => $user['email'],
-                'logged_in' => true
-            ]);
+        session()->set([
+            'user_id'   => $user['id'],
+            'doctor_id' => $doctorId,
+            'name'      => $user['name'],
+            'role'      => $user['role'],
+            'email'     => $user['email'],
+            'logged_in' => true
+        ]);
 
-            if ($user['role'] == 'doctor')
-            {
-                return redirect()->to('/doctor/dashboard');
-            }
-
-            return redirect()->to('/patient/dashboard');
+        if ($user['role'] === 'doctor')
+        {
+            return redirect()->to('/doctor/dashboard');
         }
 
-        return redirect()->back()->with(
-            'error',
-            'Invalid Credentials'
-        );
+        return redirect()->to('/patient/dashboard');
     }
+
+    return redirect()->back()->with(
+        'error',
+        'Invalid Credentials'
+    );
+}
 
     public function logout()
     {
