@@ -23,34 +23,36 @@ RUN a2enmod rewrite
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Set working directory
 WORKDIR /var/www/html
 
-# Copy project
 COPY . .
 
-# Install PHP dependencies
+# Install dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-# Set Apache document root to CodeIgniter public directory
-ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+# Replace the default Apache virtual host completely
+RUN cat > /etc/apache2/sites-available/000-default.conf <<'EOF'
+<VirtualHost *:80>
 
-# Configure Apache document root
-RUN sed -ri \
-    -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
-    /etc/apache2/sites-available/*.conf \
-    /etc/apache2/apache2.conf \
-    /etc/apache2/conf-available/*.conf
+    DocumentRoot /var/www/html/public
 
-# Allow .htaccess overrides inside public/
-RUN printf '<Directory /var/www/html/public>\n\
-    AllowOverride All\n\
-    Require all granted\n\
-</Directory>\n' > /etc/apache2/conf-available/codeigniter.conf
+    <Directory /var/www/html/public>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+        DirectoryIndex index.php
+    </Directory>
 
-RUN a2enconf codeigniter
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
 
-# Create writable directories
+</VirtualHost>
+EOF
+
+# Make sure rewrite configuration is enabled
+RUN a2enmod rewrite
+
+# Writable directories
 RUN mkdir -p \
     /var/www/html/writable/cache \
     /var/www/html/writable/logs \
