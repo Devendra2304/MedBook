@@ -26,23 +26,33 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /var/www/html
 
-# Copy project files
+# Copy project
 COPY . .
 
-# Install Composer dependencies
+# Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-# Set Apache document root to public folder
+# Set Apache document root to CodeIgniter public directory
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 
+# Configure Apache document root
 RUN sed -ri \
     -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
     /etc/apache2/sites-available/*.conf \
     /etc/apache2/apache2.conf \
     /etc/apache2/conf-available/*.conf
 
-# Set permissions
-RUN mkdir -p /var/www/html/writable/cache \
+# Allow .htaccess overrides inside public/
+RUN printf '<Directory /var/www/html/public>\n\
+    AllowOverride All\n\
+    Require all granted\n\
+</Directory>\n' > /etc/apache2/conf-available/codeigniter.conf
+
+RUN a2enconf codeigniter
+
+# Create writable directories
+RUN mkdir -p \
+    /var/www/html/writable/cache \
     /var/www/html/writable/logs \
     /var/www/html/writable/session \
     /var/www/html/writable/uploads \
